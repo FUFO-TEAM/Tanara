@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tanara/presentation/get_started.dart';
-import 'package:tanara/presentation/register_page.dart';
-import 'package:tanara/presentation/splash_page.dart';
 import 'package:tanara/routes/app_routes.dart';
 
 void main() {
