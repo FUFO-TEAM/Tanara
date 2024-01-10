@@ -1,37 +1,27 @@
 {
   "project_info": {
-    "project_number": "1031359521802",
-    "firebase_url": "https://tanara-2962b-default-rtdb.firebaseio.com",
-    "project_id": "tanara-2962b",
-    "storage_bucket": "tanara-2962b.appspot.com"
+    "project_number": "278338491148",
+    "firebase_url": "https://tanara-25a3c-default-rtdb.firebaseio.com",
+    "project_id": "tanara-25a3c",
+    "storage_bucket": "tanara-25a3c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1031359521802:android:d5f7521998ddce2b136bf3",
+        "mobilesdk_app_id": "1:278338491148:android:bde2b82829108d3054ef29",
         "android_client_info": {
           "package_name": "com.example.tanara"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1031359521802-f0it7rd60dsv623q0c7abqjmpr073i5i.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB08TDWfV6gYl6sFsbrG9jQn-4_BSpt-9A"
+          "current_key": "AIzaSyDPd8nl5XJqgrDb_n-W7cdVpvXRVPWcHBc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1031359521802-f0it7rd60dsv623q0c7abqjmpr073i5i.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

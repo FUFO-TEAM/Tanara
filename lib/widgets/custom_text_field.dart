@@ -49,7 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
               ),
             ),
-            (widget.isPass) ? GestureDetector(
+            (true) ? GestureDetector(
               onTap: () {
                 setState(() {
                   obscureText = !obscureText;

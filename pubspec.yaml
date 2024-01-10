@@ -30,10 +30,12 @@ environment:
 dependencies:
   cached_network_image: ^3.3.1
   cupertino_icons: ^1.0.2
+  firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
   flutter:
     sdk: flutter
   flutter_carousel_widget: ^2.2.0
+  provider: ^5.0.0
   google_fonts: ^6.1.0
 
 dev_dependencies:

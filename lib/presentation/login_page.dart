@@ -4,10 +4,15 @@ import 'package:tanara/shared/theme.dart';
 import 'package:tanara/widgets/custom_text_button.dart';
 import 'package:tanara/widgets/custom_text_field.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController(text: "");
-  final TextEditingController passwordController = TextEditingController(text: "");
-  
+  final TextEditingController passwordController =
+      TextEditingController(text: "");
+
   LoginPage({super.key});
 
   @override
@@ -67,9 +72,27 @@ class LoginPage extends StatelessWidget {
                 height: 20,
               ),
               CustomTextButton(
-                label: "Daftar",
+                label: "Masuk",
                 color: const Color(0xff8CC199),
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    UserCredential userCredential =
+                        await _auth.signInWithEmailAndPassword(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+
+                    // Login berhasil, tambahkan logika navigasi atau tindakan lain di sini
+                    print("Login successful: ${userCredential.user?.email}");
+                    // Contoh navigasi ke halaman beranda setelah login
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AppRoutes.rekomendasiScreen, (route) => false);
+                  } catch (e) {
+                    // Login gagal, tangani kesalahan di sini
+                    print("Login failed: $e");
+                    // Tambahkan logika atau tampilkan pesan kesalahan ke pengguna
+                  }
+                },
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -125,13 +148,13 @@ class LoginPage extends StatelessWidget {
                     width: 5,
                   ),
                   GestureDetector(
-                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.registerScreen);
-                   },
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoutes.registerScreen);
+                    },
                     child: Text(
-                    "Daftar",
-                    style: greenTexStyle,
-                  ),
+                      "Daftar",
+                      style: greenTexStyle,
+                    ),
                   )
                 ],
               )

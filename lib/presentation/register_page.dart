@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tanara/controller/auth_provider.dart';
 import 'package:tanara/routes/app_routes.dart';
 import 'package:tanara/shared/theme.dart';
 import 'package:tanara/widgets/custom_text_button.dart';
 import 'package:tanara/widgets/custom_text_field.dart';
+
+// import 'package:google_sign_in/google_sign_in.dart';
 
 class RegisterScreen extends StatelessWidget {
   final TextEditingController namaController = TextEditingController(text: "");
@@ -13,7 +17,10 @@ class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
 
   @override
+ @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     Widget logoHeader() {
       return Container(
         width: 18,
@@ -81,8 +88,10 @@ class RegisterScreen extends StatelessWidget {
               CustomTextButton(
                 label: "Daftar",
                 color: const Color(0xff8CC199),
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.rekomendasiScreen, (route) => false);
+                onPressed: () async {
+                  authProvider.submit();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, AppRoutes.rekomendasiScreen, (route) => false);
                 },
               ),
               Container(
@@ -141,7 +150,7 @@ class RegisterScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, AppRoutes.loginScreen);
-                    }, 
+                    },
                     child: Text(
                       "Masuk",
                       style: greenTexStyle,

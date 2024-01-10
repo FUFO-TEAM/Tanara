@@ -44,44 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBCXXcbRUNMbvMVXSXwLlTJDGJQK9TMDzE',
-    appId: '1:1031359521802:web:d5761f16f1b157dc136bf3',
-    messagingSenderId: '1031359521802',
-    projectId: 'tanara-2962b',
-    authDomain: 'tanara-2962b.firebaseapp.com',
-    databaseURL: 'https://tanara-2962b-default-rtdb.firebaseio.com',
-    storageBucket: 'tanara-2962b.appspot.com',
-    measurementId: 'G-N0H2TN4TRK',
+    apiKey: 'AIzaSyAqpJawtW8xVG_P-YGYSIYcAd8frZbbqLY',
+    appId: '1:278338491148:web:f483866327e0fd4654ef29',
+    messagingSenderId: '278338491148',
+    projectId: 'tanara-25a3c',
+    authDomain: 'tanara-25a3c.firebaseapp.com',
+    databaseURL: 'https://tanara-25a3c-default-rtdb.firebaseio.com',
+    storageBucket: 'tanara-25a3c.appspot.com',
+    measurementId: 'G-RKZMGHGYST',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB08TDWfV6gYl6sFsbrG9jQn-4_BSpt-9A',
-    appId: '1:1031359521802:android:d5f7521998ddce2b136bf3',
-    messagingSenderId: '1031359521802',
-    projectId: 'tanara-2962b',
-    databaseURL: 'https://tanara-2962b-default-rtdb.firebaseio.com',
-    storageBucket: 'tanara-2962b.appspot.com',
+    apiKey: 'AIzaSyDPd8nl5XJqgrDb_n-W7cdVpvXRVPWcHBc',
+    appId: '1:278338491148:android:bde2b82829108d3054ef29',
+    messagingSenderId: '278338491148',
+    projectId: 'tanara-25a3c',
+    databaseURL: 'https://tanara-25a3c-default-rtdb.firebaseio.com',
+    storageBucket: 'tanara-25a3c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC4jQACl7trwgubIFqkIrjgj328Ne9wuNA',
-    appId: '1:1031359521802:ios:502ad480477fce0f136bf3',
-    messagingSenderId: '1031359521802',
-    projectId: 'tanara-2962b',
-    databaseURL: 'https://tanara-2962b-default-rtdb.firebaseio.com',
-    storageBucket: 'tanara-2962b.appspot.com',
-    iosClientId: '1031359521802-d0d7qh9rem0kgn7l0hcvihfd8httav2j.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAvqKgZ7Dp0qAYaWhjnhR5OqBsac1qamgg',
+    appId: '1:278338491148:ios:5f701a1d13c1630454ef29',
+    messagingSenderId: '278338491148',
+    projectId: 'tanara-25a3c',
+    databaseURL: 'https://tanara-25a3c-default-rtdb.firebaseio.com',
+    storageBucket: 'tanara-25a3c.appspot.com',
     iosBundleId: 'com.example.tanara',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC4jQACl7trwgubIFqkIrjgj328Ne9wuNA',
-    appId: '1:1031359521802:ios:279a2f8ec8e52ec2136bf3',
-    messagingSenderId: '1031359521802',
-    projectId: 'tanara-2962b',
-    databaseURL: 'https://tanara-2962b-default-rtdb.firebaseio.com',
-    storageBucket: 'tanara-2962b.appspot.com',
-    iosClientId: '1031359521802-2icsib50f4lud3pjvnvivlsoih6haiku.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAvqKgZ7Dp0qAYaWhjnhR5OqBsac1qamgg',
+    appId: '1:278338491148:ios:e26e1ca74dad757854ef29',
+    messagingSenderId: '278338491148',
+    projectId: 'tanara-25a3c',
+    databaseURL: 'https://tanara-25a3c-default-rtdb.firebaseio.com',
+    storageBucket: 'tanara-25a3c.appspot.com',
     iosBundleId: 'com.example.tanara.RunnerTests',
   );
 }
