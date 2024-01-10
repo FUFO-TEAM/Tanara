@@ -109,92 +109,98 @@ class LoginPage extends StatelessWidget {
                         password: passwordController.text,
                       );
 
-                    // Login berhasil, tambahkan logika navigasi atau tindakan lain di sini
-                    print("Login successful: ${userCredential.user?.email}");
-                    // Contoh navigasi ke halaman beranda setelah login
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, AppRoutes.rekomendasiScreen, (route) => false);
-                  } catch (e) {
-                    // Login gagal, tangani kesalahan di sini
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      // Login berhasil, tambahkan logika navigasi atau tindakan lain di sini
+                      print("Login successful: ${userCredential.user?.email}");
+                      // Contoh navigasi ke halaman beranda setelah login
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          AppRoutes.rekomendasiScreen, (route) => false);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
                         duration: const Duration(seconds: 1),
-                        content: const Text("Login failed"),
-                        backgroundColor: Color.fromARGB(255, 248, 103, 103),
-                      ),
-                    );
-                    // Tambahkan logika atau tampilkan pesan kesalahan ke pengguna
-                  }
-                },
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 30,
-                  bottom: 40,
+                        content: Text("Login Failed!!"),
+                        backgroundColor: Colors.red,
+                      ));
+                      // Login gagal, tangani kesalahan di sini
+                      print("Login failed: $e");
+                      // Tambahkan logika atau tampilkan pesan kesalahan ke pengguna
+                    }
+                  },
                 ),
-                child: Row(
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 30,
+                    bottom: 40,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          color: kGreyColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 11,
+                      ),
+                      Text(
+                        "atau",
+                        style: greyTexStyle.copyWith(),
+                      ),
+                      const SizedBox(
+                        width: 11,
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: kGreyColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    await _signInWithGoogle(context);
+                  },
+                  child: Center(
+                    child: Text(
+                      "Daftar dengan Google",
+                      style: blackTexStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: medium,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Divider(
-                        color: kGreyColor,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 11,
-                    ),
                     Text(
-                      "atau",
-                      style: greyTexStyle.copyWith(),
+                      "Belum punya akun?",
+                      style: greyTexStyle,
                     ),
                     const SizedBox(
-                      width: 11,
+                      width: 5,
                     ),
-                    Expanded(
-                      child: Divider(
-                        color: kGreyColor,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.registerScreen);
+                      },
+                      child: Text(
+                        "Daftar",
+                        style: greenTexStyle,
                       ),
-                    ),
+                    )
                   ],
-                ),
-              ),
-              Center(
-                child: Text(
-                  "Daftar dengan Google",
-                  style: blackTexStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: medium,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Belum punya akun?",
-                    style: greyTexStyle,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRoutes.registerScreen);
-                    },
-                    child: Text(
-                      "Daftar",
-                      style: greenTexStyle,
-                    ),
-                  )
-                ],
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
-      )),
+      ),
     );
   }
 }
