@@ -60,6 +60,30 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
       ]
     ];
 
+    _pageController.addListener(() {
+      if (_pageController.page == _pageController.page!.roundToDouble() &&
+          _pageController.page!.toInt() != _indexContent) {
+        setState(() {
+          _indexContent = _pageController.page!.toInt();
+        });
+
+        // Check if it's the last page and navigate
+        if (_indexContent == content.length - 1) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, AppRoutes.rekomendasiPlantScreen, (route) => false);
+        }
+      }
+    });
+
+    void navigateToNextPage() {
+    if (_indexContent < content.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
     Widget logoHeader() {
       return Container(
         width: 18,
@@ -137,18 +161,13 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                   label: "Lanjut",
                   color: kGreenColor,
                   onPressed: () {
-                    if (_indexContent < content.length - 1) {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                    Future.delayed(const Duration(milliseconds: 600), () {
-                      if (_indexContent == content.length - 1) {
-                        Navigator.pushNamedAndRemoveUntil(context,
-                            AppRoutes.rekomendasiPlantScreen, (route) => false);
-                      }
-                    });
+                    navigateToNextPage();
+
+          // If it's the last page, direct to another screen immediately
+          if (_indexContent == content.length - 1) {
+            Navigator.pushReplacementNamed(
+                context, AppRoutes.rekomendasiPlantScreen);
+          }
                   },
                 ),
               ),
