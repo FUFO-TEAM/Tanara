@@ -5,8 +5,10 @@ import 'package:tanara/widgets/custom_text_button.dart';
 import 'package:tanara/widgets/custom_text_field.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController(text: "");
@@ -14,6 +16,32 @@ class LoginPage extends StatelessWidget {
       TextEditingController(text: "");
 
   LoginPage({super.key});
+
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount!.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      print("Google Sign In successful: ${userCredential.user?.displayName}");
+
+      // Navigasi atau lakukan tindakan lain setelah login berhasil
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRoutes.rekomendasiScreen, (route) => false);
+    } catch (e) {
+      print("Google Sign In failed: $e");
+      // Tambahkan logika atau tampilkan pesan kesalahan ke pengguna
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,62 +53,61 @@ class LoginPage extends StatelessWidget {
           top: 30,
         ),
         decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage(
-            "assets/tanara-icon-mini.png",
+          image: DecorationImage(
+            image: AssetImage("assets/tanara-icon-mini.png"),
+            fit: BoxFit.fill,
           ),
-          fit: BoxFit.fill,
-        )),
+        ),
       );
     }
 
     return Scaffold(
       backgroundColor: kWhiteColor,
       body: SafeArea(
-          child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 26),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              logoHeader(),
-              const SizedBox(
-                height: 50,
-              ),
-              Text(
-                "Masuk",
-                style: blackTexStyle.copyWith(
-                  fontSize: 32,
-                  fontWeight: semiBold,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 26),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                logoHeader(),
+                const SizedBox(
+                  height: 50,
                 ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              CustomTextField(
-                label: "Email",
-                isPass: false,
-                controller: emailController,
-              ),
-              CustomTextField(
-                label: "Password",
-                isPass: true,
-                controller: passwordController,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextButton(
-                label: "Masuk",
-                color: const Color(0xff8CC199),
-                onPressed: () async {
-                  try {
-                    UserCredential userCredential =
-                        await _auth.signInWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    );
+                Text(
+                  "Masuk",
+                  style: blackTexStyle.copyWith(
+                    fontSize: 32,
+                    fontWeight: semiBold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                CustomTextField(
+                  label: "Email",
+                  isPass: false,
+                  controller: emailController,
+                ),
+                CustomTextField(
+                  label: "Password",
+                  isPass: true,
+                  controller: passwordController,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomTextButton(
+                  label: "Masuk",
+                  color: const Color(0xff8CC199),
+                  onPressed: () async {
+                    try {
+                      UserCredential userCredential =
+                          await _auth.signInWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
 
                     // Login berhasil, tambahkan logika navigasi atau tindakan lain di sini
                     print("Login successful: ${userCredential.user?.email}");
