@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1031359521802-d0d7qh9rem0kgn7l0hcvihfd8httav2j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1031359521802-d0d7qh9rem0kgn7l0hcvihfd8httav2j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC4jQACl7trwgubIFqkIrjgj328Ne9wuNA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1031359521802</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.tanara</string>
+	<key>PROJECT_ID</key>
+	<string>tanara-2962b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tanara-2962b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1031359521802:ios:502ad480477fce0f136bf3</string>
+	<key>DATABASE_URL</key>
+	<string>https://tanara-2962b-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
