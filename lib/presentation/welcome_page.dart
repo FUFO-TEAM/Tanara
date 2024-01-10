@@ -191,7 +191,9 @@ class _WelcomePageState extends State<WelcomePage> {
             CustomTextButton(
               label: "Masuk",
               color: const Color(0xff8CC199),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginScreen, (route) => false);
+              },
             ),
           ],
         )

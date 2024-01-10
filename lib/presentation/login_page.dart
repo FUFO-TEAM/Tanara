@@ -89,7 +89,13 @@ class LoginPage extends StatelessWidget {
                         context, AppRoutes.rekomendasiScreen, (route) => false);
                   } catch (e) {
                     // Login gagal, tangani kesalahan di sini
-                    print("Login failed: $e");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: const Duration(seconds: 1),
+                        content: const Text("Login failed"),
+                        backgroundColor: Color.fromARGB(255, 248, 103, 103),
+                      ),
+                    );
                     // Tambahkan logika atau tampilkan pesan kesalahan ke pengguna
                   }
                 },

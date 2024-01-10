@@ -3,21 +3,27 @@ import 'package:tanara/shared/theme.dart';
 
 class CustomDropDown extends StatefulWidget {
   final String label;
-  final List<String>items;
+  final List<String> items;
   final Function(String) onValueChanged;
-  const CustomDropDown({super.key, required this.items, required this.onValueChanged, required this.label});
+  const CustomDropDown({
+    Key? key,
+    required this.items,
+    required this.onValueChanged,
+    required this.label,
+  }) : super(key: key);
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-  late String selectedValue = "";
+  late String selectedValue;
 
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.items.first;
+    // Set the initial value to the label, if it's in the items list
+    selectedValue = widget.items.contains(widget.label) ? widget.label : widget.items.first;
   }
 
   @override
@@ -43,16 +49,16 @@ class _CustomDropDownState extends State<CustomDropDown> {
           width: 14,
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/arrow-drop.png"),
+              image: AssetImage("assets/arrow-drop.png"),
             ),
           ),
         ),
-        value: widget.label,
+        value: selectedValue,
         onChanged: (newValue) {
           setState(() {
             selectedValue = newValue.toString();
           });
-            widget.onValueChanged(newValue.toString());
+          widget.onValueChanged(newValue.toString());
         },
         items: widget.items.map((value) {
           return DropdownMenuItem(

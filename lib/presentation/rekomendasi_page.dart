@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tanara/routes/app_routes.dart';
+import 'package:tanara/presentation/rekomendasi_plant_page.dart';
+import 'package:tanara/provider/pertanyaan_provider.dart';
 import 'package:tanara/shared/theme.dart';
 import 'package:tanara/widgets/custom_drop_down.dart';
 import 'package:tanara/widgets/custom_text_button.dart';
@@ -14,76 +15,57 @@ class RekomendasiPage extends StatefulWidget {
 class _RekomendasiPageState extends State<RekomendasiPage> {
   int _indexContent = 0;
   late PageController _pageController;
-  List<String> selectedValues = [
-    "Jakarta", // default for domisili
-    "< 2 jam", // default for waktu
-  ];
+  late List<List<String>> content;
+  late List<String> selectedValues;
+
+  // Initialize PertanyaanProvider
+  late PertanyaanProvider _pertanyaanProvider;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
+    _pertanyaanProvider = PertanyaanProvider();
+    selectedValues = [];
+    content = [];
+
+    // Fetch data and initialize state
+    _initializeData();
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  Future<void> _initializeData() async {
+    await _pertanyaanProvider.fetchPertanyaan();
+    content = _pertanyaanProvider.pertanyaanList
+        .map((pertanyaan) => [
+              pertanyaan.pertanyaan!,
+              ...pertanyaan.opsi!.map((opsi) => opsi.jawaban!).toList()
+            ])
+        .toList();
 
-  @override
-  Widget build(BuildContext context) {
-    List<String> domisili = [
-      "Jakarta",
-      "Bogor",
-      "Depok",
-      "Tangerang",
-      "Tangerang Selatan",
-      "Bekasi",
-    ];
-    List<String> waktu = [
-      "< 2 jam",
-      "2 - 5 jam",
-      "6 - 10 jam",
-      "11 - 15 jam",
-      "16 - 20 jam",
-      "> 20 jam"
-    ];
-    List<List> content = [
-      [
-        "Dimana Domisili kamu",
-        domisili,
-      ],
-      [
-        "Berapa banyak waktu\nluangmu dalam sehari?",
-        waktu,
-      ]
-    ];
-
-    _pageController.addListener(() {
-      if (_pageController.page == _pageController.page!.roundToDouble() &&
-          _pageController.page!.toInt() != _indexContent) {
-        setState(() {
-          _indexContent = _pageController.page!.toInt();
-        });
-
-        // Check if it's the last page and navigate
-        if (_indexContent == content.length - 1) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.rekomendasiPlantScreen, (route) => false);
-        }
-      }
+    setState(() {
+      selectedValues = List.filled(content.length, '');
     });
+  }
 
-    void navigateToNextPage() {
+  void navigateToNextPage() {
     if (_indexContent < content.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
+    } else {
+      // Use Navigator.push instead of pushReplacement
+      content.clear();
+      _pageController.dispose();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RekomendasiPlantPage()),
+      );
     }
   }
 
+  @override
+  Widget build(BuildContext context) {
     Widget logoHeader() {
       return Container(
         width: 18,
@@ -118,23 +100,22 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: content.length,
+                  
                   onPageChanged: (index) {
                     setState(() {
                       _indexContent = index;
                     });
-                    // print(selectedValues[index--]);
                   },
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        Center(
-                          child: Text(
-                            content[index][0],
-                            style: blackTexStyle.copyWith(
-                              fontSize: 24,
-                              fontWeight: semiBold,
-                            ),
+                        Text(
+                          content[index][0],
+                          textAlign: TextAlign.center,
+                          style: blackTexStyle.copyWith(
+                            fontSize: 24,
+                            fontWeight: semiBold,
                           ),
                         ),
                         const SizedBox(
@@ -142,7 +123,7 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                         ),
                         CustomDropDown(
                           label: selectedValues[index],
-                          items: content[index][1],
+                          items: content[index].sublist(1),
                           onValueChanged: (newValue) {
                             setState(() {
                               selectedValues[index] = newValue;
@@ -154,42 +135,42 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                   },
                 ),
               ),
-              const Spacer(),
+
+              // Your UI widgets...
+
               Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 child: CustomTextButton(
                   label: "Lanjut",
-                  color: kGreenColor,
+                  color: const Color(0xff8CC199),
                   onPressed: () {
                     navigateToNextPage();
-
-          // If it's the last page, direct to another screen immediately
-          if (_indexContent == content.length - 1) {
-            Navigator.pushReplacementNamed(
-                context, AppRoutes.rekomendasiPlantScreen);
-          }
                   },
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  _pageController.previousPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    bottom: 90,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Kembali",
-                      style: greenTexStyle.copyWith(),
+
+              Opacity(
+                opacity: (_indexContent == 0) ? 0 : 1,
+                child: GestureDetector(
+                  onTap: () {
+                    (_indexContent == 0) ? "": _pageController.previousPage(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                      bottom: 90,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Kembali",
+                        style: greenTexStyle.copyWith(),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

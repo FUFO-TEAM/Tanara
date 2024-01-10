@@ -39,7 +39,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             Expanded(
               child: TextFormField(
                 controller: widget.controller,
-                obscureText: obscureText,
+                obscureText: (widget.isPass) ? obscureText : false,
                 decoration: InputDecoration.collapsed(
                   hintText: widget.label,
                   fillColor: const Color(0xffC1C1C1),
@@ -49,7 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
               ),
             ),
-            (true) ? GestureDetector(
+            (widget.isPass) ? GestureDetector(
               onTap: () {
                 setState(() {
                   obscureText = !obscureText;
