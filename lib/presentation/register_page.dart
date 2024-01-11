@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tanara/controller/auth_provider.dart';
+import 'package:tanara/provider/auth_provider.dart';
 import 'package:tanara/routes/app_routes.dart';
 import 'package:tanara/shared/theme.dart';
 import 'package:tanara/widgets/custom_text_button.dart';

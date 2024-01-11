@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tanara/controller/auth_provider.dart';
+import 'package:tanara/provider/auth_provider.dart';
+import 'package:tanara/provider/tanaman_provider.dart';
 import 'package:tanara/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -10,12 +11,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
-      child: MyApp(),
-    ),
-  );
+  runApp(MyApp()
+);
 }
 
 class MyApp extends StatelessWidget {
@@ -23,10 +20,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: AppRoutes.routes,
-      initialRoute: AppRoutes.root,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<TanamanProvider>(
+          create: (context) => TanamanProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: AppRoutes.routes,
+        initialRoute: AppRoutes.root,
+      ),
     );
   }
 }

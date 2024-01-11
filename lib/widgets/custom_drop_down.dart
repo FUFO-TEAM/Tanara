@@ -3,8 +3,9 @@ import 'package:tanara/shared/theme.dart';
 
 class CustomDropDown extends StatefulWidget {
   final String label;
-  final List<String> items;
+  final List<String> items; // Includes both IDs and options
   final Function(String) onValueChanged;
+
   const CustomDropDown({
     Key? key,
     required this.items,
@@ -23,11 +24,14 @@ class _CustomDropDownState extends State<CustomDropDown> {
   void initState() {
     super.initState();
     // Set the initial value to the label, if it's in the items list
-    selectedValue = widget.items.contains(widget.label) ? widget.label : widget.items.first;
+    selectedValue =
+        widget.items.contains(widget.label) ? widget.label : widget.items.last;
   }
 
   @override
   Widget build(BuildContext context) {
+    final startOptionsIndex = widget.items.length ~/ 2;
+
     return Container(
       width: double.infinity,
       height: 60,
@@ -36,7 +40,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: DropdownButton(
-        padding: const EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric( 
           horizontal: 13,
           vertical: 15,
         ),
@@ -60,8 +64,8 @@ class _CustomDropDownState extends State<CustomDropDown> {
           });
           widget.onValueChanged(newValue.toString());
         },
-        items: widget.items.map((value) {
-          return DropdownMenuItem(
+        items: widget.items.skip(startOptionsIndex).map<DropdownMenuItem<String>>((value) {
+          return DropdownMenuItem<String>(
             value: value,
             child: Text(value),
           );

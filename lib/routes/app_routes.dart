@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tanara/presentation/detail_tanaman.dart';
 import 'package:tanara/presentation/login_page.dart';
 import 'package:tanara/presentation/register_page.dart';
 import 'package:tanara/presentation/rekomendasi_page.dart';
@@ -13,6 +14,7 @@ class AppRoutes {
   static const String welcomeScreen = '/welcome_screen';
   static const String rekomendasiScreen = '/rekomendasi_screen';
   static const String rekomendasiPlantScreen = '/rekomendasi_plant_screen';
+  static const String detailPlantScreen = '/detail_plant_screen';
 
   static Map<String, WidgetBuilder> routes = {
     root: (context) => const SplashPage(),
@@ -20,6 +22,6 @@ class AppRoutes {
     loginScreen: (context) => LoginPage(),
     welcomeScreen: (context) => const WelcomePage(),
     rekomendasiScreen: (context) => const RekomendasiPage(),
-    rekomendasiPlantScreen: (context) => const RekomendasiPlantPage(),
+    detailPlantScreen: (context) =>  DetailTanaman(),
   };
 }

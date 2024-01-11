@@ -17,6 +17,7 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
   late PageController _pageController;
   late List<List<String>> content;
   late List<String> selectedValues;
+  late List<String> selectedID;
 
   // Initialize PertanyaanProvider
   late PertanyaanProvider _pertanyaanProvider;
@@ -27,6 +28,7 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
     _pageController = PageController();
     _pertanyaanProvider = PertanyaanProvider();
     selectedValues = [];
+    selectedID = [];
     content = [];
 
     // Fetch data and initialize state
@@ -34,16 +36,23 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
   }
 
   Future<void> _initializeData() async {
+    // Fetch data and initialize state
     await _pertanyaanProvider.fetchPertanyaan();
-    content = _pertanyaanProvider.pertanyaanList
-        .map((pertanyaan) => [
-              pertanyaan.pertanyaan!,
-              ...pertanyaan.opsi!.map((opsi) => opsi.jawaban!).toList()
-            ])
-        .toList();
+    content = _pertanyaanProvider.pertanyaanList.map((pertanyaan) {
+      final options =
+          pertanyaan.opsi!.map((opsi) => opsi.jawaban!.toString()).toList();
+      // Ensure unique values by using a set
+      final id = pertanyaan.opsi!.map((e) => e.id!.toString()).toList();
+      return [
+        pertanyaan.pertanyaan!,
+        ...id,
+        ...options, // Duplicate options to ensure uniqueness
+      ];
+    }).toList();
 
     setState(() {
       selectedValues = List.filled(content.length, '');
+      selectedID = List.filled(content.length, '');
     });
   }
 
@@ -57,10 +66,10 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
       // Use Navigator.push instead of pushReplacement
       content.clear();
       _pageController.dispose();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => RekomendasiPlantPage()),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => RekomendasiPlantPage(selectedID: selectedID,)),
+          (route) => false);
     }
   }
 
@@ -100,7 +109,6 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: content.length,
-                  
                   onPageChanged: (index) {
                     setState(() {
                       _indexContent = index;
@@ -127,6 +135,11 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                           onValueChanged: (newValue) {
                             setState(() {
                               selectedValues[index] = newValue;
+                              // Calculate the offset directly based on the index, considering the alternating structure:
+                              int offset = ((content[index].indexOf(newValue)) ~/ 2);
+
+                              // Retrieve the corresponding ID using the calculated offset:
+                              selectedID[index] = content[index].sublist(0)[offset];
                             });
                           },
                         ),
@@ -135,9 +148,6 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                   },
                 ),
               ),
-
-              // Your UI widgets...
-
               Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 child: CustomTextButton(
@@ -148,15 +158,16 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                   },
                 ),
               ),
-
               Opacity(
                 opacity: (_indexContent == 0) ? 0 : 1,
                 child: GestureDetector(
                   onTap: () {
-                    (_indexContent == 0) ? "": _pageController.previousPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
+                    (_indexContent == 0)
+                        ? ""
+                        : _pageController.previousPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
                   },
                   child: Container(
                     margin: const EdgeInsets.only(
