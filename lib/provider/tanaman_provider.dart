@@ -33,4 +33,29 @@ class TanamanProvider with ChangeNotifier{
 
     notifyListeners();
   }
+
+  Future<void> fetchRekomendasi(List<String> jawaban) async {
+    var url = Uri.parse('https://magnificent-fawn-getup.cyclic.app/rekomendasiTanaman/${jawaban[0]}/${jawaban[1]}/${jawaban[2]}/${jawaban[3]}');
+
+    var headers = {
+      'content-type': 'application/json',
+    };
+
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+
+      // Clear the existing list before populating it
+      _tanamanList.clear();
+
+      for (var item in data) {
+        _tanamanList.add(Tanaman.fromJson(item));
+      }
+    } else {
+      throw Exception("Failed to get Tanaman: ${response.statusCode}");
+    }
+
+    notifyListeners();
+  }
 }

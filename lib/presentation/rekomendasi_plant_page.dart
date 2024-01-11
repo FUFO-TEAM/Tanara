@@ -18,7 +18,8 @@ class _RekomendasiPlantPageState extends State<RekomendasiPlantPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<TanamanProvider>(context, listen: false).fetchTanaman();
+    Provider.of<TanamanProvider>(context, listen: false).fetchRekomendasi(widget.selectedID);
+    widget.selectedID.map((e) => print(e));
   }
   
   int _currentIndex = 0;

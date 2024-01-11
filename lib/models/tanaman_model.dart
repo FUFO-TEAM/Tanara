@@ -3,6 +3,7 @@ class Tanaman {
   String deskripsi;
   String gambar;
   String jenis;
+  bool berbahayaUntukHewan;
   List<String> luasRuangan;
   String nama;
   List<String> penyaring;
@@ -13,6 +14,7 @@ class Tanaman {
     required this.deskripsi,
     required this.gambar,
     required this.jenis,
+    required this.berbahayaUntukHewan,
     required this.luasRuangan,
     required this.nama,
     required this.penyaring,
@@ -25,6 +27,7 @@ class Tanaman {
       deskripsi: json['deskripsi'],
       gambar: json['gambar'],
       jenis: json['jenis'],
+      berbahayaUntukHewan: json['berbahaya_untuk_hewan'],
       luasRuangan: List<String>.from(json['luas_ruangan']),
       nama: json['nama'],
       penyaring: List<String>.from(json['penyaring']),
