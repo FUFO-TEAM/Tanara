@@ -98,8 +98,8 @@ class _DetailTanamanState extends State<DetailTanaman> {
                         width: 5,
                       ),
                       Container(
-                        width: 200,
-                        height: 242,
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.width / 1.6,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: const Color(0xffF7F7F7),

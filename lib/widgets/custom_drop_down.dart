@@ -24,8 +24,15 @@ class _CustomDropDownState extends State<CustomDropDown> {
   void initState() {
     super.initState();
     // Set the initial value to the label, if it's in the items list
-    selectedValue =
-        widget.items.contains(widget.label) ? widget.label : widget.items.last;
+    selectedValue = widget.label;
+    // If the initial label is not in the items list, set it to the first item
+    if (!widget.items.contains(widget.label) && widget.items.isNotEmpty) {
+      selectedValue = widget.items.first;
+      // Trigger onValueChanged with the initial value after the build is complete
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        widget.onValueChanged(selectedValue);
+      });
+    }
   }
 
   @override
@@ -57,14 +64,19 @@ class _CustomDropDownState extends State<CustomDropDown> {
             ),
           ),
         ),
-        value: selectedValue,
+        value: selectedValue.isNotEmpty ? selectedValue : null,
         onChanged: (newValue) {
+          // Update the selected value immediately
           setState(() {
             selectedValue = newValue.toString();
           });
-          widget.onValueChanged(newValue.toString());
+
+          // Provide a slight delay to let the setState complete before calling onValueChanged
+          Future.delayed(Duration(milliseconds: 50), () {
+            widget.onValueChanged(newValue.toString());
+          });
         },
-        items: widget.items.skip(startOptionsIndex).map<DropdownMenuItem<String>>((value) {
+        items: widget.items.map<DropdownMenuItem<String>>((value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(value),

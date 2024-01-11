@@ -19,6 +19,7 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
   late List<String> selectedValues;
   late List<String> selectedID;
 
+
   // Initialize PertanyaanProvider
   late PertanyaanProvider _pertanyaanProvider;
 
@@ -30,7 +31,6 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
     selectedValues = [];
     selectedID = [];
     content = [];
-
     // Fetch data and initialize state
     _initializeData();
   }
@@ -42,10 +42,8 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
       final options =
           pertanyaan.opsi!.map((opsi) => opsi.jawaban!.toString()).toList();
       // Ensure unique values by using a set
-      final id = pertanyaan.opsi!.map((e) => e.id!.toString()).toList();
       return [
         pertanyaan.pertanyaan!,
-        ...id,
         ...options, // Duplicate options to ensure uniqueness
       ];
     }).toList();
@@ -56,7 +54,7 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
     });
   }
 
-  void navigateToNextPage() {
+  Future<void> navigateToNextPage() async {
     if (_indexContent < content.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 500),
@@ -135,11 +133,7 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                           onValueChanged: (newValue) {
                             setState(() {
                               selectedValues[index] = newValue;
-                              // Calculate the offset directly based on the index, considering the alternating structure:
-                              int offset = ((content[index].indexOf(newValue)) ~/ 2);
-
-                              // Retrieve the corresponding ID using the calculated offset:
-                              selectedID[index] = content[index].sublist(0)[offset];
+                              selectedID[index] = content[index].indexOf(newValue).toString();
                             });
                           },
                         ),
@@ -153,8 +147,11 @@ class _RekomendasiPageState extends State<RekomendasiPage> {
                 child: CustomTextButton(
                   label: "Lanjut",
                   color: const Color(0xff8CC199),
-                  onPressed: () {
-                    navigateToNextPage();
+                  onPressed: () async {
+                    navigateToNextPage().then((_) {
+                      print(selectedID[_indexContent]);
+
+                    });
                   },
                 ),
               ),

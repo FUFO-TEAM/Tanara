@@ -3,10 +3,10 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:tanara/presentation/detail_tanaman.dart';
 import 'package:tanara/provider/tanaman_provider.dart';
-import 'package:tanara/routes/app_routes.dart';
 import 'package:tanara/shared/theme.dart';
 import 'package:tanara/widgets/custom_text_button.dart';
 
+// ignore: must_be_immutable
 class RekomendasiPlantPage extends StatefulWidget {
   List<String> selectedID;
   RekomendasiPlantPage({super.key, required this.selectedID});
@@ -55,14 +55,17 @@ class _RekomendasiPlantPageState extends State<RekomendasiPlantPage> {
             const SizedBox(
               height: 60,
             ),
-            Center(
-              child: Text(
-                "Berikut adalah tanaman yang\n cocok denganmu!",
-                style: blackTexStyle.copyWith(
-                  fontSize: 20,
-                  fontWeight: medium,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 26),
+              child: Center(
+                child: Text(
+                  "Berikut adalah tanaman yang\n cocok denganmu!",
+                  style: blackTexStyle.copyWith(
+                    fontSize: 20,
+                    fontWeight: medium,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(
@@ -71,7 +74,7 @@ class _RekomendasiPlantPageState extends State<RekomendasiPlantPage> {
             Consumer<TanamanProvider>(builder: (context, tanamanProvider, _) {
               return FlutterCarousel(
                 options: CarouselOptions(
-                    height: 250.0,
+                    height: MediaQuery.of(context).size.width / 1.5,
                     showIndicator: false,
                     viewportFraction: 0.6,
                     enlargeCenterPage: true,
@@ -106,16 +109,20 @@ class _RekomendasiPlantPageState extends State<RekomendasiPlantPage> {
             ),
             Consumer<TanamanProvider>(
               builder: (context, tanamanProvider, _) {
+                // ignore: unnecessary_null_comparison
                 if (tanamanProvider.tanamanList != null &&
                     tanamanProvider.tanamanList.isNotEmpty &&
                     _currentIndex >= 0 &&
                     _currentIndex < tanamanProvider.tanamanList.length) {
-                  return Center(
-                    child: Text(
-                      tanamanProvider.tanamanList[_currentIndex].nama,
-                      style: blackTexStyle.copyWith(
-                        fontSize: 24,
-                        fontWeight: semiBold,
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                    child: Center(
+                      child: Text(
+                        tanamanProvider.tanamanList[_currentIndex].nama,
+                        style: blackTexStyle.copyWith(
+                          fontSize: 24,
+                          fontWeight: semiBold,
+                        ),
                       ),
                     ),
                   );

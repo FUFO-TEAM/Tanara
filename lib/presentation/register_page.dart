@@ -70,11 +70,13 @@ class RegisterScreen extends StatelessWidget {
               CustomTextField(
                 label: "No. Handphone",
                 isPass: false,
+                isNumber: true,
                 controller: noHpController,
               ),
               CustomTextField(
                 label: "Email",
                 isPass: false,
+                isEmail: true,
                 controller: emailController,
               ),
               CustomTextField(

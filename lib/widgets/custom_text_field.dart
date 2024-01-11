@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tanara/shared/theme.dart';
 
 // ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
   final String label;
   bool isPass;
+  bool isNumber;
+  bool isEmail;
   final TextEditingController controller;
 
   CustomTextField({
     Key? key,
     required this.label,
     this.isPass = false,
+    this.isNumber = false,
+    this.isEmail = false,
     required this.controller,
   }) : super(key: key);
 
@@ -39,6 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             Expanded(
               child: TextFormField(
                 controller: widget.controller,
+                keyboardType: (widget.isNumber) ? TextInputType.phone : (widget.isEmail) ? TextInputType.emailAddress : TextInputType.text,
                 obscureText: (widget.isPass) ? obscureText : false,
                 decoration: InputDecoration.collapsed(
                   hintText: widget.label,
