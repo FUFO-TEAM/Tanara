@@ -1,4 +1,4 @@
-class Tanaman {
+class TanamanModel {
   String cahaya;
   String deskripsi;
   String gambar;
@@ -9,7 +9,7 @@ class Tanaman {
   List<String> penyaring;
   String perawatan;
 
-  Tanaman({
+  TanamanModel({
     required this.cahaya,
     required this.deskripsi,
     required this.gambar,
@@ -21,8 +21,8 @@ class Tanaman {
     required this.perawatan,
   });
 
-  factory Tanaman.fromJson(Map<String, dynamic> json) {
-    return Tanaman(
+  factory TanamanModel.fromJson(Map<String, dynamic> json) {
+    return TanamanModel(
       cahaya: json['cahaya'],
       deskripsi: json['deskripsi'],
       gambar: json['gambar'],

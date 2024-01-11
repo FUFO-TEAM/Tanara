@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:tanara/models/tanaman_model.dart';
 import 'package:tanara/shared/theme.dart';
+import 'package:tanara/widgets/custom_text_button.dart';
 
-class DetailTanaman extends StatelessWidget {
-  const DetailTanaman({
+class DetailTanaman extends StatefulWidget {
+  TanamanModel tanamanModel;
+  DetailTanaman({
+    required this.tanamanModel,
     super.key,
   });
 
+  @override
+  State<DetailTanaman> createState() => _DetailTanamanState();
+}
+
+class _DetailTanamanState extends State<DetailTanaman> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +62,9 @@ class DetailTanaman extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 25,),
+                const SizedBox(
+                  height: 25,
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 26,
@@ -66,7 +77,7 @@ class DetailTanaman extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Lidah Mertua",
+                              widget.tanamanModel.nama,
                               style: blackTexStyle.copyWith(
                                   fontSize: 24, fontWeight: semiBold),
                             ),
@@ -74,7 +85,7 @@ class DetailTanaman extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              "Scientific Name",
+                              widget.tanamanModel.jenis,
                               style: blackTexStyle.copyWith(
                                 fontStyle: FontStyle.italic,
                                 fontSize: 12,
@@ -83,28 +94,52 @@ class DetailTanaman extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const SizedBox(
+                        width: 5,
+                      ),
                       Container(
-                        width: 214,
+                        width: 200,
                         height: 242,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: const Color(0xffF7F7F7),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              widget.tanamanModel.gambar,
+                            ),
+                            fit: BoxFit.cover
+                            )
                         ),
                       )
                     ],
                   ),
                 ),
-                const SizedBox(height: 45,),
+                const SizedBox(
+                  height: 45,
+                ),
                 Container(
-                  margin: const EdgeInsets.only(left: 26),
-                  child: Row(
-                    children: [
-                      Text("Tentang"),
-                      Text("Perlengkapan"),
-                      Text("Perawatan"),
-                    ],
+                    margin: const EdgeInsets.only(left: 26),
+                    ),
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 26, vertical: 20),
+                  child: Text(
+                    widget.tanamanModel.deskripsi,
+                    textAlign: TextAlign.justify,
                   ),
-                )
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 26,
+                    vertical: 30,
+                  ),
+                  child: CustomTextButton(
+                    label: "Pilih",
+                    color: const Color(0xff8CC199),
+                    onPressed: () {},
+                  ),
+                ),
               ],
             ),
           ],

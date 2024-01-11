@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:tanara/presentation/detail_tanaman.dart';
 import 'package:tanara/provider/tanaman_provider.dart';
 import 'package:tanara/routes/app_routes.dart';
 import 'package:tanara/shared/theme.dart';
@@ -89,6 +90,10 @@ class _RekomendasiPlantPageState extends State<RekomendasiPlantPage> {
                         decoration: BoxDecoration(
                           color: const Color(0xFFD9D9D9),
                           borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: NetworkImage(tanaman.gambar),
+                            fit: BoxFit.cover,
+                          )
                         ),
                       );
                     },
@@ -135,7 +140,7 @@ class _RekomendasiPlantPageState extends State<RekomendasiPlantPage> {
                 label: "Pilih",
                 color: const Color(0xff8CC199),
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.detailPlantScreen);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailTanaman(tanamanModel: tanamanProvider.tanamanList[_currentIndex])));
                 },
               ),
             )

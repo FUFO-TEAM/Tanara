@@ -22,6 +22,5 @@ class AppRoutes {
     loginScreen: (context) => LoginPage(),
     welcomeScreen: (context) => const WelcomePage(),
     rekomendasiScreen: (context) => const RekomendasiPage(),
-    detailPlantScreen: (context) =>  DetailTanaman(),
   };
 }

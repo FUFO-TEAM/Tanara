@@ -5,9 +5,9 @@ import 'package:tanara/models/tanaman_model.dart';
 
 class TanamanProvider with ChangeNotifier{
   String baseURL = "https://tanara-25a3c-default-rtdb.firebaseio.com"; // Replace with your actual API URL
-  List<Tanaman> _tanamanList = [];
+  List<TanamanModel> _tanamanList = [];
 
-  List<Tanaman> get tanamanList => _tanamanList;
+  List<TanamanModel> get tanamanList => _tanamanList;
 
   Future<void> fetchTanaman() async {
     var url = Uri.parse('$baseURL/tanaman.json');
@@ -25,7 +25,7 @@ class TanamanProvider with ChangeNotifier{
       _tanamanList.clear();
 
       for (var item in data) {
-        _tanamanList.add(Tanaman.fromJson(item));
+        _tanamanList.add(TanamanModel.fromJson(item));
       }
     } else {
       throw Exception("Failed to get Tanaman: ${response.statusCode}");
@@ -50,7 +50,7 @@ class TanamanProvider with ChangeNotifier{
       _tanamanList.clear();
 
       for (var item in data) {
-        _tanamanList.add(Tanaman.fromJson(item));
+        _tanamanList.add(TanamanModel.fromJson(item));
       }
     } else {
       throw Exception("Failed to get Tanaman: ${response.statusCode}");
