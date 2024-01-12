@@ -88,6 +88,20 @@ class RegisterScreen extends StatelessWidget {
                   label: "Daftar",
                   color: const Color(0xff8CC199),
                   onPressed: () async {
+                    if (namaController.text.isEmpty ||
+                        noHpController.text.isEmpty ||
+                        emailController.text.isEmpty ||
+                        passwordController.text.isEmpty) {
+                      // Tampilkan snackbar jika ada bidang yang kosong
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Harap lengkapi semua bidang"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
                     try {
                       await authProvider.register(
                         emailController.text,
