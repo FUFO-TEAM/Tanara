@@ -8,6 +8,7 @@ Berikut adalah progres aplikasi Tanara ✨
 
 ## ✨ Features
 
+- 🦕 On Boarding Screen.
 - 📐 Register.
 - ⏱️ Login.
 - 🌱 Recomendation plant.
@@ -15,4 +16,5 @@ Berikut adalah progres aplikasi Tanara ✨
 
 ## 🖼️ Screenshots 
 
-![screenshots](Images/SS.png)
+![Group 39](https://github.com/FUFO-TEAM/Tanara/assets/54298924/439fa049-94d2-4fa4-aeba-658618669385)
+
