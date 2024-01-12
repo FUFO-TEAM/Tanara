@@ -6,49 +6,38 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 class AuthProvider extends ChangeNotifier {
   final form = GlobalKey<FormState>();
 
-  var isLogin = true;
-  var enteredEmail = '';
-  var enteredPassword = '';
-
- void submit() async {
-    final _isValid = form.currentState?.validate();
-
-    if (_isValid == null || !_isValid) {
-      return;
-    }
-
-    form.currentState?.save();
-
+  Future<void> register(
+    String email,
+    String password,
+    String nama,
+    String noHp,
+  ) async {
     try {
-      UserCredential userCredential;
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-      if (isLogin) {
-        userCredential = await _auth.signInWithEmailAndPassword(
-            email: enteredEmail, password: enteredPassword);
-      } else {
-        userCredential = await _auth.createUserWithEmailAndPassword(
-            email: enteredEmail, password: enteredPassword);
-      }
+      // Setelah pendaftaran berhasil, Anda mungkin ingin melakukan sesuatu seperti menyimpan data pengguna ke database atau melakukan tindakan lain.
 
-      // Registrasi atau masuk berhasil
-      print("Authentication successful: ${userCredential.user?.email}");
+      // Registrasi berhasil
+      print("Registration successful: $email");
 
-      // Tambahkan logika navigasi atau pesan ke pengguna di sini
+      // Anda dapat menambahkan logika atau pesan ke pengguna di sini
     } catch (e) {
       if (e is FirebaseAuthException) {
-        // Kesalahan autentikasi Firebase
         if (e.code == 'email-already-in-use') {
-          print("Email already in use");
-          // Tambahkan logika atau pesan ke pengguna di sini
-        } else if (e.code == 'wrong-password') {
-          print("Wrong password");
+          // Email sudah terdaftar, Anda dapat memberikan pesan kepada pengguna atau mengambil tindakan lain sesuai kebutuhan
+          print("Registration failed: Email already in use");
           // Tambahkan logika atau pesan ke pengguna di sini
         } else {
-          print("Authentication failed: $e");
+          // Kesalahan registrasi lainnya, tangani sesuai kebutuhan
+          print("Registration failed: $e");
           // Tambahkan logika atau pesan ke pengguna di sini
         }
       } else {
-        print("Error: $e");
+        // Kesalahan umum, tangani sesuai kebutuhan
+        print("Registration failed: $e");
         // Tambahkan logika atau pesan ke pengguna di sini
       }
     }
