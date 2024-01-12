@@ -11,8 +11,4 @@ Tanara, aplikasi pemantau tanaman udara.
 
 ## 🖼️ Screenshots
 
-![screenshots](Images/1.jpg)
-![screenshots](Images/2.jpg)
-![screenshots](Images/3.jpg)
-![screenshots](Images/4.jpg)
-![screenshots](Images/5.jpg)
+![screenshots](Images/SS.png)
