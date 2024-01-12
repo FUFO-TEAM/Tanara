@@ -1,4 +1,4 @@
-# Tanara App
+# Tanara App 🌱
 
 Tanara, aplikasi pemantau tanaman udara.
 
@@ -6,9 +6,9 @@ Tanara, aplikasi pemantau tanaman udara.
 
 - 📐 Register.
 - ⏱️ Login.
-- 📊 Recomendation plant.
+- 🌱 Recomendation plant.
 - 😍 Simple and friendly animations.
 
-## 🖼️ Screenshots
+## 🖼️ Screenshots 
 
 ![screenshots](Images/SS.png)
