@@ -84,59 +84,76 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                CustomTextButton(
-                  label: "Daftar",
-                  color: const Color(0xff8CC199),
-                  onPressed: () async {
-                    if (namaController.text.isEmpty ||
-                        noHpController.text.isEmpty ||
-                        emailController.text.isEmpty ||
-                        passwordController.text.isEmpty) {
-                      // Tampilkan snackbar jika ada bidang yang kosong
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Harap lengkapi semua bidang"),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
+                Consumer<AuthProvider>(builder: (context, authProvider, _) {
+                  return (authProvider.isLoading)
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 26),
+                          child: Center(
+                              child: CircularProgressIndicator(
+                            color: kGreenColor,
+                          )))
+                      : CustomTextButton(
+                          label: "Daftar",
+                          color: const Color(0xff8CC199),
+                          onPressed: () async {
+                            try {
+                              if (namaController.text.isEmpty ||
+                                  noHpController.text.isEmpty ||
+                                  emailController.text.isEmpty ||
+                                  passwordController.text.isEmpty) {
+                                // Tampilkan snackbar jika ada bidang yang kosong
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text("Harap lengkapi semua bidang"),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
 
-                    try {
-                      await authProvider.register(
-                        emailController.text,
-                        passwordController.text,
-                        namaController.text,
-                        noHpController.text,
-                      );
+                              authProvider.setLoading(true);
 
-                      // Jika registrasi berhasil, tampilkan snackbar sukses
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 2),
-                          content: Text("Registrasi berhasil!"),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
+                              await authProvider.register(
+                                emailController.text,
+                                passwordController.text,
+                                namaController.text,
+                                noHpController.text,
+                              );
 
-                      // Setelah menampilkan snackbar, navigasi ke halaman berikutnya
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        AppRoutes.rekomendasiScreen,
-                        (route) => false,
-                      );
-                    } catch (e) {
-                      // Jika registrasi gagal, tampilkan snackbar dengan pesan kesalahan
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 2),
-                          content: Text("Registrasi gagal: $e"),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
-                ),
+                              // Jika registrasi berhasil, tampilkan snackbar sukses
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  duration: Duration(seconds: 2),
+                                  content: Text("Registrasi berhasil!"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+
+                              // Setelah menampilkan snackbar, navigasi ke halaman berikutnya
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                AppRoutes.rekomendasiScreen,
+                                (route) => false,
+                              );
+                            } catch (e) {
+                              // Jika registrasi gagal, tampilkan snackbar dengan pesan kesalahan
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  duration: const Duration(seconds: 2),
+                                  content: Text("Registrasi gagal: $e"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            } finally {
+                              authProvider.setLoading(false);
+                            }
+                          },
+                        );
+                }),
                 Container(
                   margin: const EdgeInsets.only(
                     top: 30,

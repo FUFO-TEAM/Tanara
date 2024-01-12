@@ -116,7 +116,7 @@ class LoginPage extends StatelessWidget {
                           AppRoutes.rekomendasiScreen, (route) => false);
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                         duration: const Duration(seconds: 1),
                         content: Text("Login Failed!!"),
                         backgroundColor: Colors.red,

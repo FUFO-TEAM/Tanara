@@ -6,13 +6,24 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 class AuthProvider extends ChangeNotifier {
   final form = GlobalKey<FormState>();
 
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  void setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   Future<void> register(
     String email,
     String password,
     String nama,
     String noHp,
   ) async {
-    try {
+    try { 
+      setLoading(true);
+
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -26,20 +37,14 @@ class AuthProvider extends ChangeNotifier {
       // Anda dapat menambahkan logika atau pesan ke pengguna di sini
     } catch (e) {
       if (e is FirebaseAuthException) {
-        if (e.code == 'email-already-in-use') {
-          // Email sudah terdaftar, Anda dapat memberikan pesan kepada pengguna atau mengambil tindakan lain sesuai kebutuhan
-          print("Registration failed: Email already in use");
-          // Tambahkan logika atau pesan ke pengguna di sini
-        } else {
-          // Kesalahan registrasi lainnya, tangani sesuai kebutuhan
-          print("Registration failed: $e");
-          // Tambahkan logika atau pesan ke pengguna di sini
-        }
+        throw new Exception(e.message);
       } else {
         // Kesalahan umum, tangani sesuai kebutuhan
         print("Registration failed: $e");
         // Tambahkan logika atau pesan ke pengguna di sini
       }
+    } finally {
+      setLoading(false);
     }
 
     notifyListeners();
