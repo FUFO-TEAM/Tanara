@@ -113,7 +113,7 @@ class LoginPage extends StatelessWidget {
                       print("Login successful: ${userCredential.user?.email}");
                       // Contoh navigasi ke halaman beranda setelah login
                       Navigator.pushNamedAndRemoveUntil(context,
-                          AppRoutes.rekomendasiScreen, (route) => false);
+                          AppRoutes.mainScreen, (route) => false);
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

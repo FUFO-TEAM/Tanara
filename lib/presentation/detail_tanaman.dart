@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tanara/models/tanaman_model.dart';
+import 'package:tanara/routes/app_routes.dart';
 import 'package:tanara/shared/theme.dart';
 import 'package:tanara/widgets/custom_text_button.dart';
 
@@ -137,7 +138,9 @@ class _DetailTanamanState extends State<DetailTanaman> {
                   child: CustomTextButton(
                     label: "Pilih",
                     color: const Color(0xff8CC199),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.mainScreen, (route) => false);
+                    },
                   ),
                 ),
               ],
